@@ -13,6 +13,7 @@ namespace MyMVCAPP.Repository
         internal MyDbContext context;
         internal DbSet<TEntity> dbSet;
 
+
         public Repository(MyDbContext context)
         {
             this.context = context;

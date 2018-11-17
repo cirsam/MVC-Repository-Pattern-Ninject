@@ -4,6 +4,8 @@
 namespace MyMVCAPP.App_Start
 {
     using System;
+    using System.Linq;
+    using System.Reflection;
     using System.Web;
 
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
@@ -62,9 +64,18 @@ namespace MyMVCAPP.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<IRepository<Books>>().To<Repository<Books>>();
-            kernel.Bind<IRepository<Products>>().To<Repository<Products>>();
+            var getclasses = Assembly.GetExecutingAssembly().GetTypes().Where(a=>a.Namespace=="MyMVCAPP.DataModels");
+            foreach (Type type in getclasses)
+            {
+                Type getObjectNameByNameSpace = Type.GetType(type.FullName);
 
+                Type createGenericInterfaceOfObj = typeof(IRepository<>).MakeGenericType(getObjectNameByNameSpace);
+                Type createGenericTypeOfObj = typeof(Repository<>).MakeGenericType(getObjectNameByNameSpace);
+
+                kernel.Bind(createGenericInterfaceOfObj).To(createGenericTypeOfObj);
+            }
         }
     }
+
+
 }
