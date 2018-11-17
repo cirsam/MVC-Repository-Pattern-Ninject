@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using MyMVCAPP.DataModels;
 
 namespace MyMVCAPP.Models
 {
@@ -29,5 +30,18 @@ namespace MyMVCAPP.Models
         {
             return new ApplicationDbContext();
         }
+    }
+
+
+
+    public class MyDbContext : DbContext
+    {
+        public MyDbContext()
+            : base("DefaultConnection")
+        {
+        }
+
+        public DbSet<Products> ProductsViewModols { get; set; }
+        public DbSet<Books> BooksViewModels { get; set; }
     }
 }
