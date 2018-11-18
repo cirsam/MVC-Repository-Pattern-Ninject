@@ -65,15 +65,15 @@ namespace MyMVCAPP.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             var getclasses = Assembly.GetExecutingAssembly().GetTypes().Where(a=>a.Namespace=="MyMVCAPP.DataModels");
-            foreach (Type type in getclasses)
-            {
-                Type getObjectNameByNameSpace = Type.GetType(type.FullName);
 
+            getclasses.ToList().ForEach(type=>{
+
+                Type getObjectNameByNameSpace = Type.GetType(type.FullName);
                 Type createGenericInterfaceOfObj = typeof(IRepository<>).MakeGenericType(getObjectNameByNameSpace);
                 Type createGenericTypeOfObj = typeof(Repository<>).MakeGenericType(getObjectNameByNameSpace);
 
                 kernel.Bind(createGenericInterfaceOfObj).To(createGenericTypeOfObj);
-            }
+            });
         }
     }
 
