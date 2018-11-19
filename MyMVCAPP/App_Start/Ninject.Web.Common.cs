@@ -67,7 +67,6 @@ namespace MyMVCAPP.App_Start
             var getclasses = Assembly.GetExecutingAssembly().GetTypes().Where(a=>a.Namespace=="MyMVCAPP.DataModels");
 
             getclasses.ToList().ForEach(type=>{
-
                 Type getObjectNameByNameSpace = Type.GetType(type.FullName);
                 Type createGenericInterfaceOfObj = typeof(IRepository<>).MakeGenericType(getObjectNameByNameSpace);
                 Type createGenericTypeOfObj = typeof(Repository<>).MakeGenericType(getObjectNameByNameSpace);

@@ -9,11 +9,12 @@ namespace MyMVCAPP.Repository
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        void Delete(object id);
+        void Delete(int? id);
         void Delete(TEntity entityToDelete);
-        IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "");
-        TEntity GetByID(object id);
+        IEnumerable<TEntity> GetAll();
+        TEntity GetByID(int? id);
         void Insert(TEntity entity);
         void Update(TEntity entityToUpdate);
+        void Dispose();
     }
 }

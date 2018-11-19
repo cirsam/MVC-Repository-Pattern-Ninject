@@ -20,28 +20,14 @@ namespace MyMVCAPP.Repository
             this.dbSet = context.Set<TEntity>();
         }
 
-        public virtual IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
+        public IEnumerable<TEntity> GetAll()
         {
             IQueryable<TEntity> query = dbSet;
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProperty);
-            }
-            if (orderBy != null)
-            {
-                return orderBy(query).ToList();
-            }
-            else
-            {
-                return query.ToList();
-            }
+
+            return query.ToList();
         }
 
-        public virtual TEntity GetByID(object id)
+        public virtual TEntity GetByID(int? id)
         {
             return dbSet.Find(id);
         }
@@ -52,7 +38,7 @@ namespace MyMVCAPP.Repository
             context.SaveChanges();
         }
 
-        public virtual void Delete(object id)
+        public virtual void Delete(int? id)
         {
             TEntity entityToDelete = dbSet.Find(id);
             Delete(entityToDelete);
@@ -73,6 +59,11 @@ namespace MyMVCAPP.Repository
             dbSet.Attach(entityToUpdate);
             context.Entry(entityToUpdate).State = EntityState.Modified;
             context.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            context.Dispose();
         }
     }
 

@@ -24,7 +24,7 @@ namespace MyMVCAPP.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            return View(_repository.Get());
+            return View(_repository.GetAll());
         }
 
         // GET: Products/Details/5

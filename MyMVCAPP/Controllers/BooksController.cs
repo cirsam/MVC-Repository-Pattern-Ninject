@@ -25,7 +25,7 @@ namespace MyMVCAPP.Controllers
         // GET: Books
         public ActionResult Index()
         {
-            return View(_repository.Get());
+            return View(_repository.GetAll());
         }
 
         // GET: Books/Details/5
@@ -120,13 +120,13 @@ namespace MyMVCAPP.Controllers
             return RedirectToAction("Index");
         }
 
-        //    protected override void Dispose(bool disposing)
-        //    {
-        //        if (disposing)
-        //        {
-        //            db.Dispose();
-        //        }
-        //        base.Dispose(disposing);
-        //    }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _repository.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
